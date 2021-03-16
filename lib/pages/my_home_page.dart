@@ -1,33 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:patterns/pages/notifier_provider.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
+class MyHomePage extends StatelessWidget {
   final String title;
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-  void _decrementCounter() {
-    setState(() {
-      _counter--;
-    });
-  }
+  MyHomePage({Key key, this.title});
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = CounterNotifierProvider.of(context);
+    final counter = viewModel.value;
+    final textStyle = Theme.of(context).textTheme.headline4.apply(color: viewModel.textColor);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(this.title),
       ),
       body: Center(
         child: Column(
@@ -37,17 +24,17 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             GestureDetector(
-              onTap: _decrementCounter,
+              onTap: viewModel.decrease,
               child: Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headline4,
+                '$counter',
+                style: textStyle,
               ),
             )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: viewModel.increase,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:patterns/pages/my_home_page.dart';
+import 'package:patterns/pages/notifier_provider.dart';
+import 'package:patterns/view_model/counter_view_model.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -10,7 +12,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: CounterNotifierProvider(
+          notifier: CounterViewModel(),
+          child: MyHomePage(title: 'Flutter Demo Home Page')
+      )
     );
   }
 }
