@@ -9,6 +9,9 @@ class Counter {
   }
   get value => _value;
 
+  get isAtTheLowerBound => _lowerBound == _value;
+  get isAtTheUpperBound => _upperBound == _value;
+
   increment() {
     if (_value < _upperBound) {
       _value++;

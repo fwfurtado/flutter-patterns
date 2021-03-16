@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:patterns/presenter/counter_presenter.dart';
+import 'package:patterns/view/counter_view.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -9,22 +11,22 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> implements CounterView {
   int _counter = 0;
+  Color _counterColor = Colors.grey;
+  CounterPresenter _presenter;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void initState() {
+    _presenter = CounterPresenter(this);
+    super.initState();
   }
-  void _decrementCounter() {
-    setState(() {
-      _counter--;
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
+    var textStyle = Theme.of(context).textTheme.headline4.apply(color: _counterColor);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -37,20 +39,35 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             GestureDetector(
-              onTap: _decrementCounter,
+              onTap: _presenter.decrease,
               child: Text(
                 '$_counter',
-                style: Theme.of(context).textTheme.headline4,
+                style: textStyle,
               ),
             )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _presenter.increase,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  @override
+  refreshCounter(int currentCounter) {
+    setState(() {
+      _counter = currentCounter;
+      _counterColor = Colors.grey;
+    });
+  }
+
+  @override
+  refreshTextColor(Color color) {
+    setState(() {
+      _counterColor = color;
+    });
   }
 }
