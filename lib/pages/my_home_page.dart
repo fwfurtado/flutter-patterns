@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -18,6 +17,11 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
+  void _decrementCounter() {
+    setState(() {
+      _counter--;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +36,13 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            GestureDetector(
+              onTap: _decrementCounter,
+              child: Text(
+                '$_counter',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            )
           ],
         ),
       ),
