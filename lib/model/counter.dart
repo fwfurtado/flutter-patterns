@@ -7,7 +7,10 @@ class Counter {
     this._lowerBound = low;
     this._upperBound = high;
   }
+
   get value => _value;
+  get upperBound => _upperBound;
+  get lowerBound => _lowerBound;
 
   increment() {
     if (_value < _upperBound) {

@@ -16,6 +16,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final currentValue = _controller.value;
+    var textStyle = Theme.of(context).textTheme.headline4;
+
+    if (_controller.reachedTheLowerBound) {
+      textStyle = textStyle.apply(color: Colors.redAccent);
+    }
+
+    if (_controller.reachedTheUpperBound) {
+      textStyle = textStyle.apply(color: Colors.blueAccent);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text(
                 '$currentValue',
-                style: Theme.of(context).textTheme.headline4,
+                style: textStyle,
               ),
             )
           ],
