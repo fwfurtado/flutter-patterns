@@ -10,7 +10,7 @@ class Counter {
   get value => _value;
 
   increment() {
-    if (_value <= _upperBound) {
+    if (_value < _upperBound) {
       _value++;
     }
   }
