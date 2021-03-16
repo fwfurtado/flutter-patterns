@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patterns/controller/counter_controller.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -10,21 +11,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-  void _decrementCounter() {
-    setState(() {
-      _counter--;
-    });
-  }
+  final _controller = CounterController();
 
   @override
   Widget build(BuildContext context) {
+    final currentValue = _controller.value;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -37,9 +29,11 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             GestureDetector(
-              onTap: _decrementCounter,
+              onTap: () {
+                setState(_controller.decrease);
+              },
               child: Text(
-                '$_counter',
+                '$currentValue',
                 style: Theme.of(context).textTheme.headline4,
               ),
             )
@@ -47,7 +41,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {
+          setState(_controller.increase);
+        },
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
